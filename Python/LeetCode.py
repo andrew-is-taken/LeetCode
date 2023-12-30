@@ -1,9 +1,15 @@
+import collections
 import math
 import re
-from collections import defaultdict
+import this
+from bisect import bisect_left
+from collections import defaultdict, Counter
+import random
 from typing import List, Optional
 from copy import copy
+from turtle import *
 import itertools
+import numpy as np
 
 
 class ListNode:
@@ -154,6 +160,63 @@ def bouncing_ball(h, bounce, window):
     return -1
 
 
+def drawHeart():
+    speed(100)
+    color("red")
+    pensize(5)
+    left(50)
+    forward(133)
+    circle(50, 200)
+    right(140)
+    circle(50, 200)
+    forward(133)
+    up()
+    left(60)
+    setposition(0, 100)
+    forward(-200)
+    color("black")
+
+    left(30)
+    forward(-30)
+    down()
+    forward(30)
+    up()
+    left(-60)
+    forward(-30)
+    down()
+    forward(30)
+    left(30)
+    forward(18)
+    up()
+    left(30)
+    forward(-30)
+    down()
+    forward(30)
+    up()
+    left(-60)
+    forward(-30)
+    down()
+    forward(30)
+    left(30)
+
+    forward(100)
+    up()
+    forward(82)
+    down()
+    forward(200)
+    up()
+    left(30)
+    forward(-30)
+    down()
+    forward(30)
+    up()
+    left(-60)
+    forward(-30)
+    down()
+    forward(30)
+    Screen().exitonclick()
+
+
 import string
 
 
@@ -177,11 +240,8 @@ def alphanumeric(password):
     return password.isalnum()
 
 
-import numpy
-
-
 def determinant(matrix):
-    return int(numpy.rint(numpy.linalg.det(matrix)))
+    return int(np.rint(np.linalg.det(matrix)))
 
 
 from itertools import combinations
@@ -392,9 +452,6 @@ def dresses():
         print(2)
     elif s == sum_3:
         print(3)
-
-
-import numpy as np
 
 
 def users():
@@ -1635,7 +1692,7 @@ def pivotIndex(nums: List[int]) -> int:
         return 0
 
     for i in range(1, len(nums)):
-        temp_s += nums[i-1]
+        temp_s += nums[i - 1]
         s -= nums[i]
         if temp_s == s:
             return i
@@ -1643,4 +1700,820 @@ def pivotIndex(nums: List[int]) -> int:
     return -1
 
 
-print(pivotIndex([1,7,3,6,5,6]))
+def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+    com = itertools.combinations(range(1, 10), k)
+    res = []
+    for i in com:
+        if sum(i) == n:
+            res.append(i)
+    return res
+
+
+def maxVowels(s: str, k: int) -> int:
+    vowels = 'aeiou'
+    substr = s[0:k]
+    res = 0
+    temp = 0
+    for i in substr:
+        if i in vowels:
+            temp += 1
+    if temp > res:
+        res = temp
+    for i in range(k, len(s)):
+        if s[i] in vowels:
+            temp += 1
+        if substr[0] in vowels:
+            temp -= 1
+        substr = substr[1:k]
+        substr += s[i]
+        if temp > res:
+            res = temp
+        if res == k:
+            break
+    return res
+
+
+def longestOnes(self, nums: List[int], k: int) -> int:
+    l = 0
+    for i in range(len(nums)):
+        if nums[i] == 0:
+            k -= 1
+        if k < 0:
+            if nums[l] == 0:
+                k += 1
+            l += 1
+    return i - l + 1
+
+
+def leafSimilar(root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+    def getLeaf(root) -> List[int]:
+        if root is None:
+            return []
+        if root.left is None and root.right is None:
+            return [root.val]
+        return getLeaf(root.left) + getLeaf(root.right)
+
+    return getLeaf(root1) == getLeaf(root2)
+
+
+def canVisitAllRooms(rooms: List[List[int]]) -> bool:
+    amountOfRooms = len(rooms)
+    leftKeys = rooms[0]
+    visitedRooms = [0]
+    while len(leftKeys) > 0:
+        newKeys = []
+        for i in range(len(leftKeys)):
+            if leftKeys[i] not in visitedRooms:
+                visitedRooms.append(leftKeys[i])
+                newKeys += rooms[leftKeys[i]]
+        leftKeys = newKeys
+    return len(visitedRooms) == amountOfRooms
+
+
+def predictPartyVictory(senate: str) -> str:
+    i = 0
+    r_count = senate.count('R')
+    d_count = senate.count('D')
+    curr_r = 0
+    curr_d = 0
+    while i < len(senate) and d_count > 0 and r_count > 0:
+        if senate[i] == 'R':
+            if curr_r <= r_count:
+                curr_r += 1
+                d_count -= 1
+            else:
+                return 'Dire'
+        else:
+            if curr_d <= d_count:
+                curr_d += 1
+                r_count -= 1
+            else:
+                return 'Radiant'
+        i += 1
+    return 'Radiant' if r_count > d_count else 'Dire'
+
+
+class Trie:
+
+    def __init__(self):
+        self.l = []
+
+    def insert(self, word: str) -> None:
+        self.l.append(word)
+
+    def search(self, word: str) -> bool:
+        return word in self.l
+
+    def startsWith(self, prefix: str) -> bool:
+        for i in self.l:
+            if i.startswith(prefix):
+                return True
+        return False
+
+
+def searchBST(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    while root is not None and root.val != val:
+        if root.val > val:
+            root = root.left
+        else:
+            root = root.right
+    return root
+
+
+def deleteNode(root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+    if not root:
+        return root
+
+    if root.val > key:
+        root.left = deleteNode(root.left, key)
+    elif root.val < key:
+        root.right = deleteNode(root.right, key)
+    else:
+        if not root.left:
+            return root.right
+        if not root.right:
+            return root.left
+
+        if root.left and root.right:
+            temp = root.right
+            while temp.left:
+                temp = temp.left
+            root.val = temp.val
+            root.right = deleteNode(root.right, root.val)
+
+    return root
+
+
+def eraseOverlapIntervals(intervals: List[List[int]]) -> int:
+    res = 0
+    min_i = -5 * 10 ** 4
+    intervals = sorted(intervals, key=lambda x: x[1])
+    for i in intervals:
+        if (i[0] >= min_i):
+            min_i = i[1]
+        else:
+            res += 1
+    return res
+
+
+def findMinArrowShots(points: List[List[int]]) -> int:
+    res = 1
+    min_i = -math.inf
+    max_i = math.inf
+    points = sorted(points)
+    for i in points:
+        if i[0] >= min_i and i[0] <= max_i:
+            max_i = min(i[1], max_i)
+        else:
+            max_i = i[1]
+            res += 1
+        min_i = i[0]
+    return res
+
+
+def dailyTemperatures(temperatures: List[int]) -> List[int]:
+    res = [0] * len(temperatures)
+    stack = []
+
+    for i in range(len(temperatures)):
+        while stack and temperatures[i] > stack[-1][0]:
+            temp_i = stack.pop()[1]
+            res[temp_i] = i - temp_i
+        stack.append([temperatures[i], i])
+    return res
+
+
+class StockSpanner:
+
+    def __init__(self):
+        self.l = []
+
+    def next(self, price: int) -> int:
+        res = 1
+        while self.l and self.l[-1][0] <= price:
+            prev = self.l.pop()[1]
+            res += prev
+        self.l.append((price, res))
+        return res
+
+
+def successfulPairs(spells: List[int], potions: List[int], success: int) -> List[int]:
+    potions.sort()
+    max_potion = potions[-1]
+    n = len(potions)
+    stack = []
+    for i in range(len(spells)):
+        required = math.ceil(success / spells[i])
+        if required > max_potion:
+            stack.append(0)
+        else:
+            index_potion = bisect_left(potions, required)
+            stack.append(n - index_potion)
+    return stack
+
+
+def rightSideView(root: Optional[TreeNode]) -> List[int]:
+    if root is None:
+        return []
+    if root.right is not None:
+        return [root.val] + rightSideView(root.right)
+    else:
+        return [root.val] + rightSideView(root.left)
+
+
+def maxLevelSum(root: Optional[TreeNode]) -> int:
+    def calcLevel(root, level):
+        if map.get(level) is None:
+            map[level] = root.val
+        else:
+            map[level] += root.val
+        if root.right is not None:
+            calcLevel(root.right, level + 1)
+        if root.left is not None:
+            calcLevel(root.left, level + 1)
+
+    map = {}
+    calcLevel(root, 1)
+    res = 0
+    maxSum = -100000
+    for i in range(len(map.values())):
+        if map[i + 1] > maxSum:
+            maxSum = map[i + 1]
+            res = i + 1
+    return res
+
+
+def uniqueOccurrences(arr: List[int]) -> bool:
+    arr.sort()
+    res = []
+    i = 0
+    while i < len(arr):
+        temp = arr.count(arr[i])
+        res.append(temp)
+        i += temp
+    return len(res) == len(set(res))
+
+
+class FoodRatings:
+
+    def __init__(self, foods: List[str], cuisines: List[str], ratings: List[int]):
+        self.foods = foods
+        self.cuisines = {}
+        self.ratings = {}
+        for food, cuisine, rating in zip(foods, cuisines, ratings):
+            self.cuisines[cuisine].add((-rating, food))
+            self.ratings[food].append((cuisine, rating))
+        self.cuisines = sorted(self.cuisines)
+
+    def changeRating(self, food: str, newRating: int) -> None:
+        cuisine, rating = self.ratings[food][0]
+        self.cuisines[cuisine].remove((-rating, food))
+        self.cuisines[cuisine].add((-newRating, food))
+        self.ratings[food][0] = (cuisine, newRating)
+
+    def highestRated(self, cuisine: str) -> str:
+        return self.cuisines[cuisine][0][1]
+
+
+def closeStrings(word1: str, word2: str) -> bool:
+    map1 = Counter(word1)
+    map2 = Counter(word2)
+    return sorted(map1.keys()) == sorted(map2.keys())
+
+
+def equalPairs(grid: List[List[int]]) -> int:
+    counter = collections.Counter()
+    for row in grid:
+        counter[tuple(row)] += 1
+
+    res = 0
+    n = len(grid)
+    for i in range(n):
+        temp = []
+        for j in range(n):
+            temp.append(grid[j][i])
+        res += counter[tuple(temp)]
+
+    return res
+
+
+def oddEvenList(head: Optional[ListNode]) -> Optional[ListNode]:
+    if not head:
+        return head
+
+    odd, even_start = head, head.next
+    even_end = even_start
+
+    while even_end and even_end.next:
+        odd.next, even_end.next = odd.next.next, even_end.next.next
+        odd, even_end = odd.next, even_end.next
+
+    odd.next = even_start
+
+    return head
+
+
+def deleteMiddle(head: Optional[ListNode]) -> Optional[ListNode]:
+    temp = head
+    count = 0
+
+    while temp:
+        count += 1
+        temp = temp.next
+
+    temp = head
+    mid = count // 2
+    if mid == 0:
+        return None
+
+    i = 0
+    while temp:
+        i += 1
+        if i == mid:
+            temp.next = temp.next.next
+            break
+        temp = temp.next
+
+    return head
+
+
+def maxProductDifference(nums: List[int]) -> int:
+    highest = max(nums)
+    nums.remove(highest)
+    preHighest = max(nums)
+
+    lowest = min(nums)
+    nums.remove(lowest)
+    preLowest = min(nums)
+
+    return (highest * preHighest) - (lowest * preLowest)
+
+
+def imageSmoother(img: List[List[int]]) -> List[List[int]]:
+    res = []
+    for i in range(len(img)):
+        res.append(copy(img[i]))
+        for j in range(len(img[i])):
+            avg = img[i][j]
+            counted = 1
+
+            if i + 1 < len(img):
+                avg += img[i + 1][j]
+                counted += 1
+            if i - 1 >= 0:
+                avg += img[i - 1][j]
+                counted += 1
+
+            if j + 1 < len(img[i]):
+                avg += img[i][j + 1]
+                counted += 1
+                if i + 1 < len(img):
+                    avg += img[i + 1][j + 1]
+                    counted += 1
+                if i - 1 >= 0:
+                    avg += img[i - 1][j + 1]
+                    counted += 1
+
+            if j - 1 >= 0:
+                avg += img[i][j - 1]
+                counted += 1
+                if i + 1 < len(img):
+                    avg += img[i + 1][j - 1]
+                    counted += 1
+                if i - 1 >= 0:
+                    avg += img[i - 1][j - 1]
+                    counted += 1
+
+            res[i][j] = avg // counted
+
+    return res
+
+
+def pairSum(head: Optional[ListNode]) -> int:
+    if not head.next.next:
+        return head.val + head.next.val
+
+    temp = copy(head)
+    count = 0
+    while temp:
+        count += 2
+        temp = temp.next.next
+
+    count //= 2
+    left = []
+    right = []
+    i = 1
+    temp = copy(head)
+    while i <= count:
+        left.append(temp.val)
+        temp = temp.next
+        i += 1
+
+    i = 1
+    while i <= count:
+        right.append(temp.val)
+        temp = temp.next
+        i += 1
+
+    s = 0
+    n = len(left)
+    for i in range(n):
+        if left[i] + right[n - 1 - i] > s:
+            s = left[i] + right[n - 1 - i]
+
+    return s
+
+
+def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
+    prev = None
+    temp = head
+    while temp:
+        next = temp.next
+        temp.next = prev
+        prev = temp
+        temp = next
+    return prev
+
+
+def removeStars(s: str) -> str:
+    stack = []
+    i = 0
+    n = len(s)
+    while i < n:
+        if s[i] == '*':
+            stack.pop()
+        else:
+            stack.append(s[i])
+        i += 1
+    return "".join(stack)
+
+
+def rob(nums: List[int]) -> int:
+    if len(nums) < 3:
+        return max(nums)
+    M = nums[0], max(nums[0], nums[1])
+    for i in range(2, len(nums)):
+        M = M[1], max(nums[i] + M[0], M[1])
+    return M[1]
+
+
+def buyChoco(prices: List[int], money: int) -> int:
+    m1 = min(prices)
+    prices.remove(m1)
+    m2 = min(prices)
+    if m1 + m2 > money:
+        return money
+    return money - m1 - m2
+
+
+def asteroidCollision(asteroids: List[int]) -> List[int]:
+    goingRight = []
+    goingLeft = []
+    for i in asteroids:
+        if i > 0:
+            goingRight.append(i)
+        else:
+            goingLeft.append(i)
+
+    while len(goingRight) > 0 and len(goingLeft) > 0:
+        a = abs(goingRight[-1])
+        b = abs(goingLeft[0])
+        if a > b:
+            goingLeft.pop(0)
+        elif b > a:
+            goingRight.pop(-1)
+        else:
+            goingLeft.pop(0)
+            goingRight.pop(-1)
+
+    if len(goingRight) > 0:
+        return goingRight
+    return goingLeft
+
+
+def decodeString(s: str) -> str:
+    n = 0
+    res = ''
+    stack = []
+
+    for i in s:
+        if i.isnumeric():
+            n = n * 10 + int(i)
+        elif i == '[':
+            stack.append(res)
+            stack.append(n)
+            res = ''
+            n = 0
+        elif i == ']':
+            count = stack.pop()
+            prev = stack.pop()
+            res = prev + count * res
+        else:
+            res += i
+
+    return res
+
+
+def findCircleNum(isConnected: List[List[int]]) -> int:
+    l = [i + 1 for i in range(len(isConnected[0]))]
+
+    def union(x, y):
+        tempX = l[x]
+        tempY = l[y]
+        if tempX != tempY:
+            for i in range(0, len(l)):
+                if l[i] == tempY:
+                    l[i] = tempX
+
+    for i in range(0, len(isConnected)):
+        for j in range(i + 1, len(isConnected[0])):
+            if isConnected[i][j] == 1:
+                union(i, j)
+
+    return len(set(l))
+
+
+def minCostClimbingStairs(cost: List[int]) -> int:
+    cost.append(0)
+    for i in range(len(cost)):
+        cost[i] += min(cost[i - 1], cost[i - 2])
+    return cost[-1]
+
+
+def maxScore(s: str) -> int:
+    left = 1 if s[0] == '0' else 0
+    right = 0
+    for i in range(1, len(s)):
+        right += int(s[i])
+    m = left + right
+    for i in range(1, len(s) - 1):
+        if s[i] == '0':
+            left += 1
+        else:
+            right -= 1
+        if left + right > m:
+            m = left + right
+    return m
+
+
+def calcEquation(equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+    adjacencyList = collections.defaultdict(list)
+    for i, eq in enumerate(equations):
+        a, b = eq
+        adjacencyList[a].append([b, values[i]])
+        adjacencyList[b].append([a, 1 / values[i]])
+
+    def bfs(src, trg):
+        if src not in adjacencyList or trg not in adjacencyList:
+            return -1
+        q = collections.deque()
+        visited = set()
+        q.append([src, 1])
+        visited.add(src)
+        while q:
+            n, w = q.popleft()
+            if n == trg:
+                return w
+            for neighbor, weight in adjacencyList[n]:
+                if neighbor not in visited:
+                    q.append([neighbor, w * weight])
+                    visited.add(n)
+        return -1
+
+    return [bfs(query[0], query[1]) for query in queries]
+
+
+def uniquePaths(m: int, n: int) -> int:
+    curr_row = [1] * n
+    prev_row = [1] * n
+
+    for i in range(1, m):
+        for j in range(1, n):
+            curr_row[j] = curr_row[j - 1] + prev_row[j]
+        curr_row, prev_row = prev_row, curr_row
+
+    return prev_row[-1]
+
+
+def minDistance(word1: str, word2: str) -> int:
+    len1 = len(word1) + 1
+    len2 = len(word2) + 1
+    dp = [[-1 for j in range(len2)] for j in range(len1)]
+
+    for i in range(len1):
+        for j in range(len2):
+            if i == 0:
+                dp[i][j] = j
+            elif j == 0:
+                dp[i][j] = i
+            elif word1[i - 1] == word2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i - 1][j], min(dp[i - 1][j - 1], dp[i][j - 1]))
+
+    return dp[len1 - 1][len2 - 1]
+
+
+def longestCommonSubsequence(s1: str, s2: str) -> int:
+    prev = [0 for _ in range(len(s1) + 1)]
+    cur = [0 for _ in range(len(s1) + 1)]
+
+    for ch2 in s2:
+        i = len(s1) - 1
+        for ch1 in s1:
+            if ch1 == ch2:
+                cur[i] = prev[i + 1] + 1
+            else:
+                cur[i] = max(cur[i + 1], prev[i])
+            i -= 1
+        cur, prev = prev, cur
+
+    return prev[0]
+
+
+def maxProfit(prices: List[int], fee: int) -> int:
+    if len(prices) <= 1:
+        return 0
+
+    buy = -prices[0]
+    sell = 0
+    for i in range(1, len(prices)):
+        buy = max(buy, sell - prices[i])
+        sell = max(sell, prices[i] - fee + buy)
+
+    return sell
+
+
+def minOperations(s: str) -> int:
+    curr1 = 0
+    s1 = s[0]
+    curr2 = 0
+    s2 = '0' if s[0] == '1' else '1'
+    for i in range(1, len(s)):
+        if s1[i - 1] == '0':
+            if s[i] == '1':
+                curr1 += 1
+        else:
+            if s[i] == '1':
+                curr1 += 1
+        if s2[i - 1] == '0':
+            if s[i] == '0':
+                curr2 += 1
+
+
+class Sol:
+    def goodNodes(self, root: TreeNode) -> int:
+        self.good = 0
+
+        def dfs(root, max_val):
+            if root is None:
+                return
+
+            if root.val >= max_val:
+                self.good += 1
+                max_val = root.val
+
+            dfs(root.left, max_val)
+            dfs(root.right, max_val)
+
+        dfs(root, float('-inf'))
+        return self.good
+
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        self.count = 0
+
+        def search(root, possibleSums):
+            if root is None:
+                return
+            possibleSums.append(root.val)
+            if possibleSums[-1] == targetSum:
+                self.count += 1
+            for i in range(len(possibleSums) - 1):
+                possibleSums[i] += root.val
+                if possibleSums[i] == targetSum:
+                    self.count += 1
+            search(root.left, possibleSums)
+            search(root.right, possibleSums)
+            last = possibleSums.pop(-1)
+            for i in range(len(possibleSums)):
+                possibleSums[i] -= last
+
+        search(root, [])
+        return self.count
+
+    def longestZigZag(self, root: Optional[TreeNode]) -> int:
+        res = 0
+        stack = [(root, 0, None)]
+        while stack:
+            temp = stack.pop()
+            if temp[0]:
+                res = max(res, temp[1])
+                stack.append((temp[0].left, 1 if temp[2] else temp[1] + 1, 1))
+                stack.append((temp[0].right, temp[1] + 1 if temp[2] else 1, 0))
+
+        return res
+
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if root is None:
+            return TreeNode()
+
+        if root == p or root == q:
+            return root
+
+        leftNode = self.lowestCommonAncestor(root.left, p, q)
+        rightNode = self.lowestCommonAncestor(root.right, p, q)
+
+        if leftNode and rightNode:
+            return root
+
+        if leftNode is None:
+            return rightNode
+        else:
+            return leftNode
+
+
+def removeDuplicates(nums: List[int]) -> int:
+    i = 0
+    j = 0
+    map = {}
+    while j < len(nums):
+        if nums[j] in map.keys():
+            if map[nums[j]] < 2:
+                map[nums[j]] += 1
+                nums[i] = nums[j]
+                i += 1
+        else:
+            map[nums[j]] = 1
+            nums[i] = nums[j]
+            i += 1
+        j += 1
+    return i
+
+
+def rotate(nums: List[int], k: int) -> None:
+    c = copy(nums)
+    n = len(nums)
+    for i in range(n):
+        nums[i] = c[(i - k) % n]
+
+
+def maxProfit(prices: List[int]) -> int:
+    res = 0
+    temp = 0
+    for i in range(0, len(prices)):
+        if temp > prices[i]:
+            temp = prices[i]
+        else:
+            res += prices[i] - temp
+    return res
+
+
+class RandomizedSet:
+
+    def __init__(self):
+        self.l = set()
+
+    def insert(self, val: int) -> bool:
+        if not val in self.l:
+            self.l.add(val)
+            return True
+        return False
+
+    def remove(self, val: int) -> bool:
+        if val in self.l:
+            self.l.remove(val)
+            return True
+        return False
+
+    def getRandom(self) -> int:
+        return random.choice(list(self.l))
+
+
+def trap(height: List[int]) -> int:
+    maxI = 0
+    n = len(height)
+    res = 0
+
+    for i in range(1, n):
+        if height[i] > height[maxI]:
+            maxI = i
+
+    tempMax = height[0]
+    for i in range(1, maxI):
+        if height[i] > tempMax:
+            tempMax = height[i]
+        else:
+            res += tempMax - height[i]
+
+    tempMax = height[n - 1]
+    for i in range(n - 1, maxI, -1):
+        if height[i] > tempMax:
+            tempMax = height[i]
+        else:
+            res += tempMax - height[i]
+
+    return res
+
+
+s = Sol()
+print(trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
