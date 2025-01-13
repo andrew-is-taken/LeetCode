@@ -2515,5 +2515,24 @@ def trap(height: List[int]) -> int:
     return res
 
 
-s = Sol()
-print(trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
+def minimumLength(s: str) -> int:
+    map = {}
+
+    for i in range(len(s)):
+        temp = s[i]
+        if temp in map.keys():
+            map[temp] += 1
+        else:
+            map[temp] = 1
+
+    res = 0
+    for v in map.values():
+        if v % 2 == 0:
+            res += 2
+        else:
+            res += v % 2
+
+    return res
+
+
+print(minimumLength("abaacbcbb"))
