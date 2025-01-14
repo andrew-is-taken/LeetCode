@@ -2535,4 +2535,24 @@ def minimumLength(s: str) -> int:
     return res
 
 
-print(minimumLength("abaacbcbb"))
+def findThePrefixCommonArray(A: List[int], B: List[int]) -> List[int]:
+    n = len(A)
+    res = [0] * n
+    count = [0] * (n + 1)
+    temp = 0
+
+    for i in range(n):
+        count[A[i]] += 1
+        if count[A[i]] == 2:
+            temp += 1
+
+        count[B[i]] += 1
+        if count[B[i]] == 2:
+            temp += 1
+
+        res[i] = temp
+
+    return res
+
+
+print(findThePrefixCommonArray([1,3,2,4], [3,1,2,4]))
