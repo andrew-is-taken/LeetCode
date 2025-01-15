@@ -2555,4 +2555,32 @@ def findThePrefixCommonArray(A: List[int], B: List[int]) -> List[int]:
     return res
 
 
-print(findThePrefixCommonArray([1,3,2,4], [3,1,2,4]))
+def minimizeXor(num1, num2):
+    onesInNum1 = bin(num1).count('1')
+    onesInNum2 = bin(num2).count('1')
+
+    if onesInNum1 == onesInNum2:
+        return num1
+
+    if onesInNum1 < onesInNum2:
+        diff = onesInNum2 - onesInNum1
+        pos = 0
+
+        while diff > 0:
+            while (num1 >> pos) & 1 == 1:
+                pos += 1
+            num1 = num1 | (1 << pos)
+            diff -= 1
+
+        return num1
+
+    diff = onesInNum1 - onesInNum2
+
+    while diff > 0:
+        num1 = num1 & (num1 - 1)
+        diff -= 1
+
+    return num1
+
+
+print(findThePrefixCommonArray([1, 3, 2, 4], [3, 1, 2, 4]))
