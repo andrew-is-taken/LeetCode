@@ -2583,4 +2583,22 @@ def minimizeXor(num1, num2):
     return num1
 
 
-print(findThePrefixCommonArray([1, 3, 2, 4], [3, 1, 2, 4]))
+def xorAllNums(nums1: List[int], nums2: List[int]) -> int:
+    xor1, xor2 = 0, 0
+
+    for i in nums1:
+        xor1 ^= i
+
+    for j in nums2:
+        xor2 ^= j
+
+    res = 0
+    if len(nums2) % 2 == 1:
+        res ^= xor1
+    if len(nums1) % 2 == 1:
+        res ^= xor2
+
+    return res
+
+
+print(xorAllNums([1, 2], [3, 4]))
