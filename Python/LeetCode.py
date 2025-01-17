@@ -2601,4 +2601,13 @@ def xorAllNums(nums1: List[int], nums2: List[int]) -> int:
     return res
 
 
+def doesValidArrayExist(derived: List[int]) -> bool:
+    res = 0
+
+    for i in derived:
+        res = res ^ i
+
+    return res == 0
+
+
 print(xorAllNums([1, 2], [3, 4]))
