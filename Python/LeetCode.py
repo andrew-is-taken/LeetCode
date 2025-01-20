@@ -2675,4 +2675,27 @@ def trapRainWater(heightMap: List[List[int]]) -> int:
     return res
 
 
-print(minCost([[1, 1, 3], [3, 2, 2], [1, 1, 4]]))
+def firstCompleteIndex(arr: List[int], mat: List[List[int]]) -> int:
+    m, n = len(mat), len(mat[0])
+
+    to_i = [-1] * (m * n + 1)
+    to_j = [-1] * (m * n + 1)
+
+    for i, row in enumerate(mat):
+        for j, x in enumerate(row):
+            to_i[x] = i
+            to_j[x] = j
+
+    R = [0] * m
+    C = [0] * n
+
+    for i, x in enumerate(arr):
+        R[to_i[x]] += 1
+        C[to_j[x]] += 1
+        if R[to_i[x]] == n or C[to_j[x]] == m:
+            return i
+
+    return -1
+
+
+print(firstCompleteIndex([1, 3, 4, 2], [[1, 4], [2, 3]]))
