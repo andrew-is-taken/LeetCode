@@ -2697,5 +2697,16 @@ def firstCompleteIndex(arr: List[int], mat: List[List[int]]) -> int:
 
     return -1
 
+def gridGame(grid: List[List[int]]) -> int:
+    done, temp = sum(grid[0]) - grid[0][0], 0
+    res = done
+    
+    for i in range(1, len(grid[0])):
+        done -= grid[0][i]
+        temp += grid[1][i - 1]
+        res = min(res, max(done, temp))
+        
+    return res
+
 
 print(firstCompleteIndex([1, 3, 4, 2], [[1, 4], [2, 3]]))
