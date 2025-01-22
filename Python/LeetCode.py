@@ -2697,16 +2697,44 @@ def firstCompleteIndex(arr: List[int], mat: List[List[int]]) -> int:
 
     return -1
 
+
 def gridGame(grid: List[List[int]]) -> int:
     done, temp = sum(grid[0]) - grid[0][0], 0
     res = done
-    
+
     for i in range(1, len(grid[0])):
         done -= grid[0][i]
         temp += grid[1][i - 1]
         res = min(res, max(done, temp))
-        
+
     return res
 
 
-print(firstCompleteIndex([1, 3, 4, 2], [[1, 4], [2, 3]]))
+def highestPeak(isWater: List[List[int]]) -> List[List[int]]:
+    m, n = len(isWater), len(isWater[0])
+    res = [[-1] * n for _ in range(m)]
+
+    queue = collections.deque()
+
+    for i in range(m):
+        for j in range(n):
+            if isWater[i][j] == 1:
+                queue.append((i, j, 0))
+                res[i][j] = 0
+
+    dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+    while queue:
+        r, c, h = queue.popleft()
+
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+
+            if 0 <= nr < m and 0 <= nc < n and res[nr][nc] == -1:
+                res[nr][nc] = h + 1
+                queue.append((nr, nc, h + 1))
+
+    return res
+
+
+print(highestPeak([[0, 0, 1], [1, 0, 0], [0, 0, 0]]))
