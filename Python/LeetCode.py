@@ -2737,4 +2737,34 @@ def highestPeak(isWater: List[List[int]]) -> List[List[int]]:
     return res
 
 
-print(highestPeak([[0, 0, 1], [1, 0, 0], [0, 0, 0]]))
+def countServers(grid: List[List[int]]) -> int:
+    # m, n = len(grid), len(grid[0])
+    # res = 0
+    #
+    # for i in range(m):
+    #     row_pcs = sum(grid[i])
+    #     for j in range(n):
+    #         if grid[i][j] == 1:
+    #             if row_pcs > 1:
+    #                 res += 1
+    #             else:
+    #                 col_pcs = sum([r[j] for r in grid])
+    #                 if col_pcs > 1:
+    #                     res += 1
+    #
+    # return res
+    res, n = 0, len(grid)
+
+    for r in range(n):
+        s = sum(grid[r])
+        if s > 1:
+            res += s
+        elif s == 1:
+            col = grid[r].index(1)
+            if sum(grid[r][col] for r in range(n)) > 1:
+                res += 1
+
+    return res
+
+
+print(countServers([[1,0],[1,1]]))
