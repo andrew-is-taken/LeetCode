@@ -2761,10 +2761,30 @@ def countServers(grid: List[List[int]]) -> int:
             res += s
         elif s == 1:
             col = grid[r].index(1)
-            if sum(grid[r][col] for r in range(n)) > 1:
+            if sum(grid[r][col] for r in range(n)) > 1: 
                 res += 1
 
     return res
 
 
-print(countServers([[1,0],[1,1]]))
+def eventualSafeNodes(graph: List[List[int]]) -> List[int]:
+    checked = [0] * len(graph)
+
+    def check_loop(node):
+        if checked[node] == -1:
+            return True
+        if checked[node] == 1:
+            return False
+
+        checked[node] = -1
+        for i in graph[node]:
+            if check_loop(i):
+                return True
+        checked[node] = 1
+
+        return False
+
+    return [node for node in range(len(graph)) if not check_loop(node)]
+
+
+print(eventualSafeNodes([[1,2],[2,3],[5],[0],[5],[],[]]))
