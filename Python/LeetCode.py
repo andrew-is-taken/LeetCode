@@ -2761,7 +2761,7 @@ def countServers(grid: List[List[int]]) -> int:
             res += s
         elif s == 1:
             col = grid[r].index(1)
-            if sum(grid[r][col] for r in range(n)) > 1: 
+            if sum(grid[r][col] for r in range(n)) > 1:
                 res += 1
 
     return res
@@ -2787,4 +2787,24 @@ def eventualSafeNodes(graph: List[List[int]]) -> List[int]:
     return [node for node in range(len(graph)) if not check_loop(node)]
 
 
-print(eventualSafeNodes([[1,2],[2,3],[5],[0],[5],[],[]]))
+def lexicographicallySmallestArray(nums: List[int], limit: int) -> List[int]:
+    n, group = len(nums), 0
+    sorted_nums = sorted(nums)
+    sets = [0]
+    map = {sorted_nums[0]: 0}
+
+    for i in range(1, n):
+        if sorted_nums[i] - sorted_nums[i - 1] > limit:
+            sets.append(i)
+            group += 1
+        map[sorted_nums[i]] = group
+
+    for i in range(n):
+        temp = map[nums[i]]
+        nums[i] = sorted_nums[sets[temp]]
+        sets[temp] += 1
+
+    return nums
+
+
+print(lexicographicallySmallestArray([1,7,6,18,2,1], 3))
