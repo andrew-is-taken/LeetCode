@@ -2807,4 +2807,84 @@ def lexicographicallySmallestArray(nums: List[int], limit: int) -> List[int]:
     return nums
 
 
-print(lexicographicallySmallestArray([1,7,6,18,2,1], 3))
+def maximumInvitations(favorite: List[int]) -> int:
+    # def dfs(person, temp, fav, left, right):
+    #     if fav[person][0] != person:
+    #         if not fav[person][1]:
+    #             temp += 1
+    #             fav[person][1] = True
+    #             if person == right or fav[person][0] == left or fav[person][0] == right:
+    #                 return max(dfs(fav[person][0], temp, fav, person, right), temp)
+    #             else:
+    #                 return max(dfs(fav[person][0], temp, fav, person, right), temp-1)
+    #         else:
+    #             if person == right or fav[person][0] == left or fav[person][0] == right:
+    #                 return temp
+    #             else:
+    #                 return temp - 1
+    #     else:
+    #         return 2
+    #
+    # n = len(favorite)
+    # res = 0
+    # for i in range(n):
+    #     favorite_cpy = [[favorite[i], False] for i in range(n)]
+    #     res = max(dfs(i, 0, favorite_cpy, 0, i), res)
+    #
+    # return res
+
+    adj = defaultdict(list)
+    transpose = defaultdict(list)
+    for i in range(len(favorite)):
+        adj[i].append(favorite[i])
+        transpose[favorite[i]].append(i)
+
+    stack = []
+    visited = [False] * len(favorite)
+
+    def dfs(node):
+        visited[node] = True
+        for n in adj[node]:
+            if not visited[n]:
+                dfs(n)
+        stack.append(node)
+
+    for i in range(len(favorite)):
+        if not visited[i]:
+            dfs(i)
+
+    sccs = []
+    scc = set()
+    visited = [False] * len(favorite)
+
+    def traverseForScc(node):
+        visited[node] = True
+        scc.add(node)
+        for n in transpose[node]:
+            if not visited[n]:
+                traverseForScc(n)
+
+    while stack:
+        top = stack.pop()
+        if not visited[top]:
+            scc = set()
+            traverseForScc(top)
+            sccs.append(scc)
+
+    res = max([len(scc) if len(scc) != 2 else -1 for scc in sccs])
+
+    def findLongestArm(a, b):
+        l = 0
+        for node in transpose[a]:
+            if node != b:
+                l = max(l, 1 + findLongestArm(node, b))
+        return l
+
+    twoNodeSccs = 0
+    for n1, n2 in [scc for scc in sccs if len(scc) == 2]:
+        twoNodeSccs += 2 + findLongestArm(n1, n2) + findLongestArm(n2, n1)
+
+    return max(res, twoNodeSccs)
+
+
+print(maximumInvitations([3,0,1,4,1]))
