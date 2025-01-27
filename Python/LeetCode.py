@@ -2887,4 +2887,19 @@ def maximumInvitations(favorite: List[int]) -> int:
     return max(res, twoNodeSccs)
 
 
+def checkIfPrerequisite(numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
+    matrix = [[False] * numCourses for _ in range(numCourses)]
+
+    for pre, course in prerequisites:
+        matrix[pre][course] = True
+
+    for k in range(numCourses):
+        for i in range(numCourses):
+            for j in range(numCourses):
+                if matrix[i][k] and matrix[k][j]:
+                    matrix[i][j] = True
+
+    return [matrix[u][v] for u, v in queries]
+
+
 print(maximumInvitations([3,0,1,4,1]))
