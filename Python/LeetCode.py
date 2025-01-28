@@ -2902,4 +2902,24 @@ def checkIfPrerequisite(numCourses: int, prerequisites: List[List[int]], queries
     return [matrix[u][v] for u, v in queries]
 
 
-print(maximumInvitations([3,0,1,4,1]))
+def findMaxFish(grid: List[List[int]]) -> int:
+    def dfs(i, j):
+        if i < 0 or i >= m or j < 0 or j >= n or visited[i][j] or grid[i][j] == 0:
+            return 0
+        temp = grid[i][j]
+        visited[i][j] = True
+        temp += dfs(i + 1, j) + dfs(i - 1, j) + dfs(i, j + 1) + dfs(i, j - 1)
+        return temp
+
+    m, n, res = len(grid), len(grid[0]), 0
+    visited = [[False] * n for _ in range(m)]
+
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] != 0 and not visited[i][j]:
+                res = max(dfs(i, j), res)
+
+    return res
+
+
+print(maximumInvitations([3, 0, 1, 4, 1]))
