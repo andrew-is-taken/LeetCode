@@ -2921,5 +2921,32 @@ def findMaxFish(grid: List[List[int]]) -> int:
 
     return res
 
+def magnificentSets(n: int, edges: List[List[int]]) -> int:
+    graph = [[] for _ in range(n)]
+
+    for temp, b in edges:
+        graph[temp - 1].append(b - 1)
+        graph[b - 1].append(temp - 1)
+
+    map = defaultdict(int)
+    for i in range(n):
+        queue = collections.deque([i])
+        dist = [0] * n
+        dist[i] = mx = 1
+        root = i
+        while queue:
+            temp = queue.popleft()
+            root = min(root, temp)
+            for b in graph[temp]:
+                if dist[b] == 0:
+                    dist[b] = dist[temp] + 1
+                    mx = max(mx, dist[b])
+                    queue.append(b)
+                elif abs(dist[b] - dist[temp]) != 1:
+                    return -1
+        map[root] = max(map[root], mx)
+
+    return sum(map.values())
+
 
 print(maximumInvitations([3, 0, 1, 4, 1]))
