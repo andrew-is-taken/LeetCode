@@ -2921,6 +2921,7 @@ def findMaxFish(grid: List[List[int]]) -> int:
 
     return res
 
+
 def magnificentSets(n: int, edges: List[List[int]]) -> int:
     graph = [[] for _ in range(n)]
 
@@ -2949,4 +2950,41 @@ def magnificentSets(n: int, edges: List[List[int]]) -> int:
     return sum(map.values())
 
 
-print(maximumInvitations([3, 0, 1, 4, 1]))
+def largestIsland(grid: List[List[int]]) -> int:
+    def dfs(start):
+        queue = collections.deque()
+        queue.append(start)
+        water = set()
+        temp = 1
+        while queue:
+            i, j = queue.pop()
+            for di, dj in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                ni, nj = i + di, j + dj
+                if 0 <= ni < m and 0 <= nj < n:
+                    if grid[ni][nj] == 1:
+                        grid[ni][nj] = 2
+                        queue.append((ni, nj))
+                        temp += 1
+                    elif grid[ni][nj] == 0:
+                        water.add((ni, nj))
+        for cell in water:
+            map[cell] += temp
+
+    m, n = len(grid), len(grid[0])
+
+    map = defaultdict(int)
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 1:
+                grid[i][j] = 2
+                dfs((i, j))
+
+    if map:
+        return 1 + max(map.values())
+    elif grid[0][0] == 0:
+        return 1
+
+    return m * n
+
+
+print(largestIsland([[1,0],[0,1]]))
