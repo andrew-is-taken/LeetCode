@@ -3000,4 +3000,21 @@ def isArraySpecial(nums: List[int]) -> bool:
     return True
 
 
-print(largestIsland([[1,0],[0,1]]))
+def longestMonotonicSubarray(nums: List[int]) -> int:
+    n = len(nums)
+    res, temp_inc, temp_dec = 1, 1, 1
+
+    for i in range(n - 1):
+        if nums[i] > nums[i+1]:
+            temp_dec += 1
+            temp_inc = 1
+        elif nums[i] < nums[i+1]:
+            temp_inc += 1
+            temp_dec = 1
+        else:
+            temp_inc = temp_dec = 1
+        res = max(temp_inc, temp_dec, res)
+
+    return res
+
+print(longestMonotonicSubarray([1,4,3,3,2]))
