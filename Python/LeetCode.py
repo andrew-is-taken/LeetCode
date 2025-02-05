@@ -3017,4 +3017,39 @@ def longestMonotonicSubarray(nums: List[int]) -> int:
 
     return res
 
-print(longestMonotonicSubarray([1,4,3,3,2]))
+
+def maxAscendingSum(nums: List[int]) -> int:
+    n = len(nums)
+    res, temp = nums[0], nums[0]
+
+    for i in range(n - 1):
+        if nums[i] < nums[i + 1]:
+            temp += nums[i+1]
+        else:
+            temp = nums[i+1]
+
+        if temp > res:
+            res = temp
+
+    return res
+
+
+def areAlmostEqual(s1: str, s2: str) -> bool:
+    if s1 == s2:
+        return True
+
+    n, diff, swaps = len(s1), [], 0
+    for i in range(n):
+        if s1[i] != s2[i]:
+            diff.append((s1[i], s2[i]))
+            if len(diff) > 2:
+                return False
+
+    i, j = diff[0]
+    if (j, i) in diff:
+        return True
+    else:
+        return False
+
+
+print(areAlmostEqual("bank", "kanb"))
