@@ -3051,5 +3051,20 @@ def areAlmostEqual(s1: str, s2: str) -> bool:
     else:
         return False
 
+def tupleSameProduct(nums: List[int]) -> int:
+    n, res = len(nums), 0
+    count = {}
 
-print(areAlmostEqual("bank", "kanb"))
+    for i in range(n):
+        for j in range(i + 1, n):
+            temp = nums[i] * nums[j]
+            if temp in count:
+                res += 8 * count[temp]
+                count[temp] += 1
+            else:
+                count[temp] = 1
+
+    return res
+
+
+print(tupleSameProduct([2,3,4,6]))
