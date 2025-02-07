@@ -2990,11 +2990,11 @@ def largestIsland(grid: List[List[int]]) -> int:
 def isArraySpecial(nums: List[int]) -> bool:
     n = len(nums)
 
-    if  n == 1:
+    if n == 1:
         return True
 
     for i in range(1, n):
-        if nums[i] % 2 == nums[i-1] % 2:
+        if nums[i] % 2 == nums[i - 1] % 2:
             return False
 
     return True
@@ -3005,10 +3005,10 @@ def longestMonotonicSubarray(nums: List[int]) -> int:
     res, temp_inc, temp_dec = 1, 1, 1
 
     for i in range(n - 1):
-        if nums[i] > nums[i+1]:
+        if nums[i] > nums[i + 1]:
             temp_dec += 1
             temp_inc = 1
-        elif nums[i] < nums[i+1]:
+        elif nums[i] < nums[i + 1]:
             temp_inc += 1
             temp_dec = 1
         else:
@@ -3024,9 +3024,9 @@ def maxAscendingSum(nums: List[int]) -> int:
 
     for i in range(n - 1):
         if nums[i] < nums[i + 1]:
-            temp += nums[i+1]
+            temp += nums[i + 1]
         else:
-            temp = nums[i+1]
+            temp = nums[i + 1]
 
         if temp > res:
             res = temp
@@ -3051,6 +3051,7 @@ def areAlmostEqual(s1: str, s2: str) -> bool:
     else:
         return False
 
+
 def tupleSameProduct(nums: List[int]) -> int:
     n, res = len(nums), 0
     count = {}
@@ -3067,4 +3068,25 @@ def tupleSameProduct(nums: List[int]) -> int:
     return res
 
 
-print(tupleSameProduct([2,3,4,6]))
+def queryResults(limit: int, queries: list[list[int]]) -> list[int]:
+    node, col = {}, {}
+    res = []
+
+    for x, y in queries:
+        if x in node:
+            prev_color = node[x]
+            if prev_color == y:
+                res.append(len(col))
+                continue
+            if col[prev_color] == 1:
+                del col[prev_color]
+            else:
+                col[prev_color] -= 1
+        node[x] = y
+        col[y] = col.get(y, 0) + 1
+        res.append(len(col))
+
+    return res
+
+
+print(tupleSameProduct([2, 3, 4, 6]))
