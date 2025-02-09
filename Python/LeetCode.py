@@ -3089,4 +3089,18 @@ def queryResults(limit: int, queries: list[list[int]]) -> list[int]:
     return res
 
 
+def countBadPairs(nums: List[int]) -> int:
+    n, res = len(nums), 0
+    map = {}
+
+    for i in range(n):
+        key = nums[i] - i
+        val = map.get(key, 0)
+        res += map.get(key, 0)
+        map[key] = val + 1
+
+    return (n * (n - 1)) // 2 - res
+
+
+
 print(tupleSameProduct([2, 3, 4, 6]))
