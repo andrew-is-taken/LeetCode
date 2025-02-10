@@ -3102,5 +3102,16 @@ def countBadPairs(nums: List[int]) -> int:
     return (n * (n - 1)) // 2 - res
 
 
+def clearDigits(s: str) -> str:
+    i = 0
 
-print(tupleSameProduct([2, 3, 4, 6]))
+    while i < len(s):
+        if s[i].isnumeric():
+            s = s[:i-1:] + s[i+1::]
+            i -= 2
+        i += 1
+
+    return s
+
+
+print(clearDigits("cb34"))
