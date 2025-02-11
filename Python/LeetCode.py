@@ -3114,4 +3114,14 @@ def clearDigits(s: str) -> str:
     return s
 
 
-print(clearDigits("cb34"))
+def removeOccurrences(s: str, part: str) -> str:
+    i, n = 0, len(part)
+    while i < len(s):
+        if s[i:i+n:] == part:
+            s = s[:i:] + s[i+n::]
+            i -= n
+        i += 1
+    return s
+
+
+print(removeOccurrences("daabcbaabcbc", "abc"))
