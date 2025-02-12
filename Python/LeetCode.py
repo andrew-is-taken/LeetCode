@@ -3124,4 +3124,20 @@ def removeOccurrences(s: str, part: str) -> str:
     return s
 
 
-print(removeOccurrences("daabcbaabcbc", "abc"))
+def maximumSum(nums: List[int]) -> int:
+    n, s = len(nums), -1
+    nums = sorted(nums)
+
+    for i in range(n-1, 0, -1):
+        for j in range(i-1, -1, -1):
+            if nums[i] + nums[j] > s:
+                sum_i = sum(int(_) for _ in list(str(nums[i])))
+                sum_j = sum(int(_) for _ in list(str(nums[j])))
+                if sum_i == sum_j:
+                    s = nums[i] + nums[j]
+            else:
+                break
+
+    return s
+
+print(maximumSum([9,2,2,5]))
