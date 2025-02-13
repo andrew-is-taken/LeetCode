@@ -6,6 +6,7 @@ import this
 from bisect import bisect_left
 from collections import defaultdict, Counter
 import random
+from heapq import heapify, heappop, heappushpop
 from typing import List, Optional
 from copy import copy
 from turtle import *
@@ -3140,4 +3141,30 @@ def maximumSum(nums: List[int]) -> int:
 
     return s
 
-print(maximumSum([9,2,2,5]))
+
+import bisect
+def minOperations(nums: List[int], k: int) -> int:
+    # nums, res = sorted(nums), 0
+    # smallest = nums[0]
+    #
+    # while smallest < k and len(nums) > 1:
+    #     x, y = nums.pop(0), nums.pop(0)
+    #     bisect.insort(nums, x * 2 + y)
+    #     smallest = nums[0]
+    #     res += 1
+    #
+    # return res
+
+    heapify(nums)
+    res = 0
+    num = heappop(nums)
+
+    while num < k:
+        new = 2 * num + heappop(nums)
+        num = heappushpop(nums, new)
+        res += 1
+
+    return res
+
+
+print(minOperations([2,11,10,1,3], 10))
