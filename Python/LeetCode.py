@@ -316,7 +316,7 @@ def sort_key(elem):
     return int(elem[1])
 
 
-def x():
+def n():
     f = open('del.txt', 'r')
     lines = f.readlines()
     l = [line.strip().split() for line in lines]
@@ -3167,4 +3167,38 @@ def minOperations(nums: List[int], k: int) -> int:
     return res
 
 
-print(minOperations([2,11,10,1,3], 10))
+def punishmentNumber(n: int) -> int:
+    def suitableNumber(temp, target):
+        if temp == target:
+            return True
+        if temp == 0:
+            return target == 0
+
+        for m in (10, 100, 1000):
+            if suitableNumber(temp // m, target - temp % m):
+                return True
+
+        return False
+
+    res = 1
+    for i in range(2, n+1):
+        temp = i * i
+        if suitableNumber(temp, i):
+            res += temp
+
+    return res
+
+
+def partition(x, target):
+    if x == target: return True
+    if x == 0: return target == 0
+    for m in (10, 100, 1000):
+        if partition(x // m, target - x % m):
+            return True
+    return False
+
+
+return sum(x for i in range(1, n + 1) if partition(x := i * i, i))
+
+
+print(punishmentNumber(10))
