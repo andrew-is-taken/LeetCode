@@ -3108,7 +3108,7 @@ def clearDigits(s: str) -> str:
 
     while i < len(s):
         if s[i].isnumeric():
-            s = s[:i-1:] + s[i+1::]
+            s = s[:i - 1:] + s[i + 1::]
             i -= 2
         i += 1
 
@@ -3118,8 +3118,8 @@ def clearDigits(s: str) -> str:
 def removeOccurrences(s: str, part: str) -> str:
     i, n = 0, len(part)
     while i < len(s):
-        if s[i:i+n:] == part:
-            s = s[:i:] + s[i+n::]
+        if s[i:i + n:] == part:
+            s = s[:i:] + s[i + n::]
             i -= n
         i += 1
     return s
@@ -3129,8 +3129,8 @@ def maximumSum(nums: List[int]) -> int:
     n, s = len(nums), -1
     nums = sorted(nums)
 
-    for i in range(n-1, 0, -1):
-        for j in range(i-1, -1, -1):
+    for i in range(n - 1, 0, -1):
+        for j in range(i - 1, -1, -1):
             if nums[i] + nums[j] > s:
                 sum_i = sum(int(_) for _ in list(str(nums[i])))
                 sum_j = sum(int(_) for _ in list(str(nums[j])))
@@ -3143,6 +3143,8 @@ def maximumSum(nums: List[int]) -> int:
 
 
 import bisect
+
+
 def minOperations(nums: List[int], k: int) -> int:
     # nums, res = sorted(nums), 0
     # smallest = nums[0]
@@ -3181,12 +3183,22 @@ def punishmentNumber(n: int) -> int:
         return False
 
     res = 1
-    for i in range(2, n+1):
+    for i in range(2, n + 1):
         temp = i * i
         if suitableNumber(temp, i):
             res += temp
 
     return res
+
+
+def numTilePossibilities(tiles: str) -> int:
+    res = set()
+
+    for i in range(1, len(tiles) + 1):
+        for p in itertools.permutations(tiles, i):
+            res.add(p)
+
+    return len(res)
 
 
 print(punishmentNumber(10))
