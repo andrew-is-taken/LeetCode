@@ -3215,4 +3215,26 @@ def smallestNumber(pattern: str) -> str:
     return "".join(res)
 
 
+def getHappyString(n: int, k: int) -> str:
+    res = ['_' for _ in range(n + 1)]
+    chars = "abc"
+
+    min_k, max_k = 0, 0
+    for i in range(1, n + 1):
+        for ch in chars:
+            if ch != res[i - 1]:
+                min_k = max_k + 1
+                max_k += 2 ** (n - i)
+
+                if min_k <= k <= max_k:
+                    max_k = min_k - 1
+                    res[i] = ch
+                    break
+
+        if res[i] == '_':
+            return ''
+
+    return ''.join(res[1:])
+
+
 print(smallestNumber("IIIDIDDD"))
