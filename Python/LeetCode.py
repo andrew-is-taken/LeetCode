@@ -3237,4 +3237,16 @@ def getHappyString(n: int, k: int) -> str:
     return ''.join(res[1:])
 
 
+def findDifferentBinaryString(nums: List[str]) -> str:
+    n, res = len(nums), ''
+
+    for i in range(n):
+        if nums[i][i] == '0':
+            res += '1'
+        else:
+            res += '0'
+
+    return res
+
+
 print(smallestNumber("IIIDIDDD"))
