@@ -3249,4 +3249,23 @@ def findDifferentBinaryString(nums: List[str]) -> str:
     return res
 
 
-print(smallestNumber("IIIDIDDD"))
+def lenLongestFibSubseq(arr: List[int]) -> int:
+    nums = set(arr)
+    res = 0
+
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            a, b = arr[i], arr[j]
+            temp = 2
+
+            while a + b in nums:
+                a, b = b, a + b
+                temp += 1
+
+            if temp > 2 and temp > res:
+                res = temp
+
+    return res
+
+
+print(lenLongestFibSubseq([1,2,3,4,5,6,7,8]))
