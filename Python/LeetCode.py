@@ -3295,4 +3295,13 @@ def mergeArrays(nums1: List[List[int]], nums2: List[List[int]]) -> List[List[int
     return res
 
 
-print(mergeArrays([[2,4],[3,6],[5,5]], [[1,3],[4,3]]))
+def checkPowersOfThree(n: int) -> bool:
+    for i in range(14, -1, -1):
+        temp = 3**i
+        if n >= temp:
+            n -= temp
+
+    return n == 0
+
+
+print(checkPowersOfThree(21))
