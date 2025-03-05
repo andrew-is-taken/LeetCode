@@ -3304,4 +3304,11 @@ def checkPowersOfThree(n: int) -> bool:
     return n == 0
 
 
+def coloredCells(n: int) -> int:
+    if n == 1:
+        return 1
+
+    return n * n + (n - 1) * (n - 1)
+
+
 print(checkPowersOfThree(21))
