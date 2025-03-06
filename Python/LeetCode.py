@@ -3297,7 +3297,7 @@ def mergeArrays(nums1: List[List[int]], nums2: List[List[int]]) -> List[List[int
 
 def checkPowersOfThree(n: int) -> bool:
     for i in range(14, -1, -1):
-        temp = 3**i
+        temp = 3 ** i
         if n >= temp:
             n -= temp
 
@@ -3309,6 +3309,24 @@ def coloredCells(n: int) -> int:
         return 1
 
     return n * n + (n - 1) * (n - 1)
+
+
+def findMissingAndRepeatedValues(grid: List[List[int]]) -> List[int]:
+    n = len(grid)
+    map = [0] * (n * n + 1)
+    res = [-1, -1]
+
+    for i in grid:
+        for j in i:
+            map[j] += 1
+
+    for j in range(1, n * n + 1):
+        if map[j] == 2:
+            res[0] = j
+        if map[j] == 0:
+            res[1] = j
+
+    return res
 
 
 print(checkPowersOfThree(21))
