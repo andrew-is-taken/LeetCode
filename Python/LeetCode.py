@@ -3329,4 +3329,15 @@ def findMissingAndRepeatedValues(grid: List[List[int]]) -> List[int]:
     return res
 
 
-print(checkPowersOfThree(21))
+def minimumRecolors(blocks: str, k: int) -> int:
+    res = blocks.count('W')
+
+    for i in range(0, len(blocks) - k + 1):
+        temp = blocks[i:i+k:].count('W')
+        if temp < res:
+            res = temp
+
+    return res
+
+
+print(minimumRecolors('WWBBBWBBBBBWWBWWWB', 16))
