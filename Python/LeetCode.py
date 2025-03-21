@@ -3333,11 +3333,29 @@ def minimumRecolors(blocks: str, k: int) -> int:
     res = blocks.count('W')
 
     for i in range(0, len(blocks) - k + 1):
-        temp = blocks[i:i+k:].count('W')
+        temp = blocks[i:i + k:].count('W')
         if temp < res:
             res = temp
 
     return res
 
 
-print(minimumRecolors('WWBBBWBBBBBWWBWWWB', 16))
+def findAllRecipes(recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
+    available = set(supplies)
+    needs = {r: set(i) for r, i in zip(recipes, ingredients)}
+    changed = True
+
+    while changed:
+        changed = False
+        for r in recipes:
+            if r in available:
+                continue
+
+            if needs[r].issubset(available):
+                available.add(r)
+                changed = True
+
+    return [r for r in recipes if r in available]
+
+
+print(findAllRecipes(recipes=["bread"], ingredients=[["yeast", "flour"]], supplies=["yeast", "flour", "corn"]))
