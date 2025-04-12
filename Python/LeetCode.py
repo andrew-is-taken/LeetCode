@@ -3358,4 +3358,44 @@ def findAllRecipes(recipes: List[str], ingredients: List[List[str]], supplies: L
     return [r for r in recipes if r in available]
 
 
-print(findAllRecipes(recipes=["bread"], ingredients=[["yeast", "flour"]], supplies=["yeast", "flour", "corn"]))
+def countSymmetricIntegers(low: int, high: int) -> int:
+    res = 0
+
+    for i in range(low, high + 1):
+        temp = str(i)
+        n = len(temp)
+        if n % 2 != 0:
+            continue
+        left, right = temp[:n//2:], temp[n//2::]
+        s_left = sum([int(i) for i in left])
+        s_right = sum([int(i) for i in right])
+
+        if s_left == s_right:
+            res += 1
+
+    return res
+
+def isMatch(s: str, p: str) -> bool:
+    s_i, p_i, temp, l = 0, 0, 0, -1
+    while s_i < len(s):
+        if p_i < len(p) and (p[p_i] == '?' or p[p_i] == s[s_i]):
+            s_i += 1
+            p_i += 1
+        elif p_i < len(p) and p[p_i] == '*':
+            l = p_i
+            temp = s_i
+            p_i += 1
+        elif l != -1:
+            p_i = l + 1
+            temp += 1
+            s_i = temp
+        else:
+            return False
+
+    while p_i < len(p) and p[p_i] == '*':
+        p_i += 1
+
+    return p_i == len(p)
+
+
+print(countSymmetricIntegers(1200,1230))
